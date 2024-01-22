@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Orders{
+  OrderID BigInt @id @default(autoincrement())
+  OrderNumber BigInt
+  UserID String @db.VarChar(255)
+  StaffID BigInt
+  OrderStatus String
+  OrderPaid Boolean
+  CakeNumber BigInt
+  CakeSize Int
+  Users Users @relation(fields: [UserID], references: [UserID])
+  Staff Staff @relation(fields: [StaffID], references: [StaffID])
+}
+
+
+model Cakes{
+  CakeID BigInt @id @default(autoincrement())
+  CakeNumber BigInt
+  Type String
+  TypePrice Float
+  Allergens String[]
+  MinEst Int
+  MaxEst Int 
+  Vegetarian Boolean
+  Vegan Boolean
+}
+
+model Sizes{
+  SizeID BigInt @id @default(autoincrement())
+  CakeSize Int
+  Shape String
+  Price Float
+}
+
+model Users{
+  UserID String @id @db.VarChar(255)
+  Order Orders[]
+  UserForename String
+  UserSurname String
+  UserAddress String?
+  UserTown String?
+  UserCounty String?
+  UserPostcode String?
+  UserEmail String
+  UserMobile String?
+  IsUserStaff Boolean @default(false)
+}
+
+model Staff {
+  StaffID BigInt @id @default(autoincrement())
+  Order Orders[]
+  StaffForename String 
+  StaffSurname String
+  StaffPosition String
+}
