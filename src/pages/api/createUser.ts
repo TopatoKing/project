@@ -1,16 +1,31 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { type NextApiRequest, type NextApiResponse } from "next";
 import {db} from "@/server/db";
+
+type Data = {
+	data: {
+		id: string;
+		first_name: string;
+		last_name: string;
+		email_addresses: {
+			email_address: string;
+		}[];
+	};
+};
+
 
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) {
 	if (req.method === "POST") {
-		const { data } = req.body;
+		const { data } = req.body as Data;
 
 		let admin = false;
 
 		if (
+			data.email_addresses &&
+			data.email_addresses.length > 0 &&
+			data.email_addresses[0] &&
 			data.email_addresses[0].email_address.endsWith("@mycakeyworld.co.uk")
 		) {
 			admin = true;
@@ -22,7 +37,7 @@ export default async function handler(
 					UserID: data.id,
 					UserForename: data.first_name,
 					UserSurname: data.last_name,
-					UserEmail: data.email_addresses[0].email_address,
+					UserEmail: data.email_addresses?.[0] ? data.email_addresses[0].email_address : "",
 					IsUserStaff: admin,
 				},
 			});
