@@ -7,7 +7,16 @@ import Navbar from "@/components/Navbar";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        variables: {
+          colorPrimary: "#ae924a",
+          colorText: "white",
+          fontFamily: "Arial, sans-serif",
+        },
+      }}
+    >
       <main className={GeistSans.className}>
       <Navbar/>
       <Component {...pageProps} />;
