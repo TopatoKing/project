@@ -48,7 +48,7 @@ export default async function handler(
 			});
 		} catch (error) {
 			console.error("Error inserting user:", error);
-			res.status(500).json({ error: "Error creating user" });
+			res.status(500).json({ error: "Error creating user: " + error});
 		}
 	} else {
 		res.status(405).json({ error: "Method not allowed" });
