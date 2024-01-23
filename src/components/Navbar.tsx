@@ -11,17 +11,17 @@ const Navbar = () => {
             <h2>My Cakey World</h2>
             <ul className="hidden md:flex gap-x-6 text-white">
               <li>
-                <Link href="/about">
+                <Link href="/Products">
                   <p>Products</p>
                 </Link>
               </li>
               <li>
-                <Link href="/services">
+                <Link href="/About us">
                   <p>About Us</p>
                 </Link>
               </li>
               <li>
-                <Link href="/contacts">
+                <Link href="Contact">
                   <p>Contact</p>
               </Link>
               </li>
