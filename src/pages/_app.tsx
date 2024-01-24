@@ -9,10 +9,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: dark,
         variables: {
           colorPrimary: "#ae924a",
-          colorText: "white",
           fontFamily: "Arial, sans-serif",
         },
       }}
