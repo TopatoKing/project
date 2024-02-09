@@ -8,57 +8,68 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Orders{
-  OrderID BigInt @id @default(autoincrement())
+model Orders {
+  OrderID     BigInt  @id @default(autoincrement())
   OrderNumber BigInt
-  UserID String @db.VarChar(255)
-  StaffID BigInt
+  UserID      String  @db.VarChar(255)
+  StaffID     BigInt
   OrderStatus String
-  OrderPaid Boolean
-  CakeNumber BigInt
+  OrderPaid   Boolean
+  CakeNumber  BigInt
+  CakeSize    Int
+  Users       Users   @relation(fields: [UserID], references: [UserID])
+  Staff       Staff   @relation(fields: [StaffID], references: [StaffID])
+}
+
+model Cakes {
+  CakeID        BigInt          @id @default(autoincrement())
+  CakeNumber    BigInt
+  Type          String
+  TypePrice     Float
+  MinEst        Int
+  MaxEst        Int
+  CakeAllergens CakeAllergens[]
+}
+
+model Sizes {
+  SizeID   BigInt @id @default(autoincrement())
   CakeSize Int
-  Users Users @relation(fields: [UserID], references: [UserID])
-  Staff Staff @relation(fields: [StaffID], references: [StaffID])
+  Shape    String
+  Price    Float
 }
 
-
-model Cakes{
-  CakeID BigInt @id @default(autoincrement())
-  CakeNumber BigInt
-  Type String
-  TypePrice Float
-  Allergens String[]
-  MinEst Int
-  MaxEst Int 
-  Vegetarian Boolean
-  Vegan Boolean
-}
-
-model Sizes{
-  SizeID BigInt @id @default(autoincrement())
-  CakeSize Int
-  Shape String
-  Price Float
-}
-
-model Users{
-  UserID String @id @db.VarChar(255)
-  Order Orders[]
+model Users {
+  UserID       String   @id @db.VarChar(255)
+  Order        Orders[]
   UserForename String
-  UserSurname String
-  UserAddress String?
-  UserTown String?
-  UserCounty String?
+  UserSurname  String
+  UserAddress  String?
+  UserTown     String?
+  UserCounty   String?
   UserPostcode String?
-  UserEmail String
-  UserMobile String?
-  IsUserStaff Boolean @default(false)
+  UserEmail    String
+  UserMobile   String?
+  IsUserStaff  Boolean  @default(false)
 }
 
 model Staff {
-  StaffID BigInt @id @default(autoincrement())
-  Order Orders[]
-  StaffForename String 
-  StaffSurname String
+  StaffID       BigInt   @id @default(autoincrement())
+  Order         Orders[]
+  StaffForename String
+  StaffSurname  String
   StaffPosition String
+}
+
+model Allergens {
+  AllergenID    BigInt          @id
+  AllergenName  String
+  CakeAllergens CakeAllergens[]
+}
+
+model CakeAllergens {
+  CakeAllergensID BigInt    @id @default(autoincrement())
+  CakeID          BigInt
+  AllergenID      BigInt
+  Cakes           Cakes     @relation(fields: [CakeID], references: [CakeID])
+  Allergens       Allergens @relation(fields: [AllergenID], references: [AllergenID])
 }
