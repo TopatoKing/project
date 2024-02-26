@@ -44,5 +44,5 @@ yarn-error.log*
 # jetbrains
 .idea
 
-# bun
-bun.lockb
+# yarn
+yarn.lock
