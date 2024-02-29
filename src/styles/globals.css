@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.vl {
+  border-left: 2px solid #57b0fe;
+  height: 500px;
+}

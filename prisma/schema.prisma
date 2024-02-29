@@ -9,22 +9,23 @@ datasource db {
 }
 
 model Orders {
-  OrderID     BigInt  @id @default(autoincrement())
-  OrderNumber BigInt
+  OrderID     Int  @id @default(autoincrement())
+  OrderNumber Int
   UserID      String  @db.VarChar(255)
-  StaffID     BigInt
+  StaffID     Int
   OrderStatus String
   OrderPaid   Boolean
-  CakeNumber  BigInt
+  CakeNumber  Int
   CakeSize    Int
   Users       Users   @relation(fields: [UserID], references: [UserID])
   Staff       Staff   @relation(fields: [StaffID], references: [StaffID])
 }
 
 model Cakes {
-  CakeID        BigInt          @id @default(autoincrement())
-  CakeNumber    BigInt
+  CakeID        Int          @id @default(autoincrement())
+  CakeNumber    Int
   Type          String
+  CakeStringID  String
   TypePrice     Float
   MinEst        Int
   MaxEst        Int
@@ -32,7 +33,7 @@ model Cakes {
 }
 
 model Sizes {
-  SizeID   BigInt @id @default(autoincrement())
+  SizeID   Int @id @default(autoincrement())
   CakeSize Int
   Shape    String
   Price    Float
@@ -53,7 +54,7 @@ model Users {
 }
 
 model Staff {
-  StaffID       BigInt   @id @default(autoincrement())
+  StaffID       Int   @id @default(autoincrement())
   Order         Orders[]
   StaffForename String
   StaffSurname  String
@@ -61,15 +62,15 @@ model Staff {
 }
 
 model Allergens {
-  AllergenID    BigInt          @id
+  AllergenID    Int          @id @default(autoincrement())
   AllergenName  String
   CakeAllergens CakeAllergens[]
 }
 
 model CakeAllergens {
-  CakeAllergensID BigInt    @id @default(autoincrement())
-  CakeID          BigInt
-  AllergenID      BigInt
+  CakeAllergensID Int    @id @default(autoincrement())
+  CakeID          Int
+  AllergenID      Int
   Cakes           Cakes     @relation(fields: [CakeID], references: [CakeID])
   Allergens       Allergens @relation(fields: [AllergenID], references: [AllergenID])
 }
