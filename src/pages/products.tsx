@@ -24,6 +24,7 @@ export default function Products({ cakes }: { cakes: Cakes[] }) {
           <Link
             className="block border-4 border-[#57b0fe] p-4 text-center"
             href={`/products/${cake.CakeID}`}
+            key={cake.CakeID}
           >
             <Image
               alt={cake.Type}

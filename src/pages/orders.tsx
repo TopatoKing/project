@@ -30,7 +30,7 @@ export default function Account({
 
   function CakeNumbertoCakeName(CakeNumber: number) {
     return (
-      theCakes.find((cake) => cake.CakeID === CakeNumber)?.Type || "Unknown"
+      theCakes.find((cake) => cake.CakeID === CakeNumber)?.Type ?? "Unknown"
     );
   }
   async function cancelOrder(OrderID: number) {
@@ -74,7 +74,7 @@ export default function Account({
                 <p className="text-lg">
                   Cake: {CakeNumbertoCakeName(order.CakeNumber)}
                 </p>
-                <p className="text-lg">Size: {order.CakeSize}"</p>
+                <p className="text-lg">Size: {order.CakeSize}&quot;</p>
                 <p className="text-lg">Shape: {order.CakeShape}</p>
                 <p className="text-lg">Total: £{order.CakePriceTotal}</p>
                 <p className="text-lg">Status: {order.OrderStatus}</p>
