@@ -63,7 +63,7 @@ export default function SearchPage({
         CakeNumber: theCake.CakeID,
         CakeSize:
           sizes.find((size) => size.Price.toString() === selectedSizeMultiplier)
-            ?.CakeSize || 0,
+            ?.CakeSize ?? 0,
         CakeShape: selectedShape,
         CakePriceTotal: finalCakePrice,
       }),
@@ -128,7 +128,7 @@ export default function SearchPage({
               </SelectTrigger>
               <SelectContent position="popper">
                 {sizes.map((size) => (
-                  <SelectItem value={size.Price.toString()}>
+                  <SelectItem value={size.Price.toString()} key={size.Price}>
                     {size.CakeSize}”
                   </SelectItem>
                 ))}
