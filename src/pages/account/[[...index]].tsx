@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { UserProfile } from "@clerk/nextjs";
 import { ClerkProvider } from "@clerk/nextjs";
 
+//font for the text
 const copper = localFont({ src: "./../copper.otf" });
 
 //the nav element is the page selection part for the accounts page (navigation bar is on the left side of the page)

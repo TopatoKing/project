@@ -6,8 +6,11 @@ import type { GetServerSideProps } from "next";
 import { db } from "@/server/db";
 import type { Cakes } from "@prisma/client";
 
+//font for the text
 const copper = localFont({ src: "./copper.otf" });
 
+//This is the products page, which displays all the products available to purchase
+//The products are displayed in a grid format, with the product image and product name
 export default function Products({ cakes }: { cakes: Cakes[] }) {
   return (
     <main className="rounded-xl container mx-auto min-w-[80%] max-w-4xl bg-[#B7DDFE] p-4">
@@ -41,6 +44,7 @@ export default function Products({ cakes }: { cakes: Cakes[] }) {
   );
 }
 
+//This function gets the cakes from the database and returns them as props
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cakes = await db.cakes.findMany();
   return {

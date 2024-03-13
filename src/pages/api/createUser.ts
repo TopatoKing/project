@@ -1,6 +1,7 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { db } from "@/server/db";
 
+//this is the data that will be sent to the api route
 type Data = {
   data: {
     id: string;
@@ -12,6 +13,9 @@ type Data = {
   };
 };
 
+//this api route will be called when a new user is created user logs in and will insert a new user into the database
+//and send a success message or an error message back for the toaster to display
+//it will also check if the user is an admin and set the IsUserStaff field to true if they are
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,

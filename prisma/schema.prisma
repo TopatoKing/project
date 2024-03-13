@@ -8,12 +8,14 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+//defining the status options for the orders
 enum Status {
   NOT_STARTED
   IN_PROGRESS
   COMPLETE
 }
 
+//database table for Order information
 model Orders {
   OrderID     Int  @id @default(autoincrement())
   UserID      String  @db.VarChar(255)
@@ -28,6 +30,8 @@ model Orders {
   Staff       Staff?   @relation(fields: [StaffID], references: [StaffID])
 }
 
+//database table for Cake information
+//CakeNumber is redundant?
 model Cakes {
   CakeID        Int          @id @default(autoincrement())
   CakeNumber    Int
@@ -39,12 +43,14 @@ model Cakes {
   CakeAllergens CakeAllergens[]
 }
 
+//database table for Sizes and their price multipliers
 model Sizes {
   SizeID   Int @id @default(autoincrement())
   CakeSize Int
   Price    Float
 }
 
+//database table for user information
 model Users {
   UserID       String   @id @db.VarChar(255)
   Order        Orders[]
@@ -59,6 +65,7 @@ model Users {
   IsUserStaff  Boolean  @default(false)
 }
 
+//database table for staff information
 model Staff {
   StaffID       Int   @id @default(autoincrement())
   Order         Orders[]
@@ -67,12 +74,14 @@ model Staff {
   StaffPosition String
 }
 
+//database table for allergen information
 model Allergens {
   AllergenID    Int          @id @default(autoincrement())
   AllergenName  String
   CakeAllergens CakeAllergens[]
 }
 
+//database table for the allergens in each cake
 model CakeAllergens {
   CakeAllergensID Int    @id @default(autoincrement())
   CakeID          Int

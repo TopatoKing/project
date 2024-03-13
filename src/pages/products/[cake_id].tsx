@@ -24,7 +24,10 @@ interface FinalCake extends Cakes {
   }[];
 }
 
-//
+//this is the page for the product selected from the products page
+//it displays the cake image, allergens, size, shape and price
+//it also allows the user to place an order for the selected cake
+//if the user is not logged in they will not be able to place an order
 export default function SearchPage({
   theCake,
   sizes,

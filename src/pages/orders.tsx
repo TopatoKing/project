@@ -7,6 +7,12 @@ import { toast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 
+//this is the orders section of the account page, it displays the orders for the logged in user
+//the nav element is the page selection part for the accounts page (navigation bar is on the left side of the page)
+//it displays the cake name, size, shape, total price, status and if it has been paid for
+//it also allows the user to cancel an order if the status is NOT_STARTED this is done by calling the cancelOrder api route
+//upon requesting to cancel an order the user will be notified if the order was successfully cancelled or not through the toast component
+//the cancel button is disabled if the order status is not NOT_STARTED 
 export default function Account({
   orders,
   theCakes,
@@ -86,6 +92,8 @@ export default function Account({
   );
 }
 
+//this function gets the orders, the cakes and the user from the database
+//if the user is not logged in they will be redirected to the sign in page
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { userId } = getAuth(context.req);
   if (!userId) {

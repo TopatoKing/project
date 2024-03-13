@@ -11,9 +11,9 @@ import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Toaster } from "@/components/ui/toaster";
-
 import "@/styles/globals.css";
 
+//fonts for the text
 const marker = localFont({ src: "./marker.ttf" });
 const copper = localFont({ src: "./copper.otf" });
 
@@ -37,6 +37,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
               "container mx-auto min-h-screen min-w-[80%] max-w-4xl rounded-lg bg-[#B7DDFE] p-4"
             }
           >
+            
             <h1
               className={cn(
                 marker.className,
@@ -80,4 +81,5 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   );
 };
 
+//This is the main export of the file, which is the main component of the webpage
 export default MyApp;
