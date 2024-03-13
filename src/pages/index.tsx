@@ -2,6 +2,9 @@ import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
 
+
+//this is the main page as the user loads onto the website
+//this is the first page the user will see before navigating to other pages with the nav bar at the top of the page
 export default function home() {
   return (
     <>
@@ -12,7 +15,7 @@ export default function home() {
       </Head>
       <main className="flex items-center justify-center">
         <Image alt="Cakey World" height={544} src="/cake.jpg" width={816} />
-        </main>
+      </main>
     </>
   );
 }

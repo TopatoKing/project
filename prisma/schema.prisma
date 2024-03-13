@@ -8,17 +8,24 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum Status {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETE
+}
+
 model Orders {
   OrderID     Int  @id @default(autoincrement())
-  OrderNumber Int
   UserID      String  @db.VarChar(255)
-  StaffID     Int
-  OrderStatus String
+  StaffID     Int?
+  OrderStatus Status @default(NOT_STARTED)
   OrderPaid   Boolean
   CakeNumber  Int
   CakeSize    Int
+  CakeShape   String
+  CakePriceTotal Float
   Users       Users   @relation(fields: [UserID], references: [UserID])
-  Staff       Staff   @relation(fields: [StaffID], references: [StaffID])
+  Staff       Staff?   @relation(fields: [StaffID], references: [StaffID])
 }
 
 model Cakes {
@@ -35,7 +42,6 @@ model Cakes {
 model Sizes {
   SizeID   Int @id @default(autoincrement())
   CakeSize Int
-  Shape    String
   Price    Float
 }
 
