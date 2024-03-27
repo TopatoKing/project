@@ -71,6 +71,7 @@ export default function Account({
           {orders.map((order, thecake) => (
             <div key={order.OrderID} className="my-4 flex flex-col">
               <div className="rounded-md block border-4 border-[#57b0fe] p-4">
+                <p className="text-lg">Order No. {order.OrderID}</p>
                 <p className="text-lg">
                   Cake: {CakeNumbertoCakeName(order.CakeNumber)}
                 </p>

@@ -32,10 +32,10 @@ export default function Products({ cakes }: { cakes: Cakes[] }) {
               height="150"
               src={`/cakes/${cake.CakeStringID}.jpg`}
               style={{
-                aspectRatio: "150/150",
+                aspectRatio: "200/150",
                 objectFit: "cover",
               }}
-              width="150"
+              width="300"
             />
             <span>{cake.Type}</span>
           </Link>

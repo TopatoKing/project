@@ -38,8 +38,8 @@ export default function SearchPage({
   console.log(sizes);
 
   const [finalCakePrice, setFinalCakePrice] = useState(theCake.TypePrice);
-  const [selectedSizeMultiplier, setSelectedSizeMultiplier] = useState("8");
-  const [selectedShape, setSelectedShape] = useState("Rectangular");
+  const [selectedSizeMultiplier, setSelectedSizeMultiplier] = useState("1");
+  const [selectedShape, setSelectedShape] = useState("circle");
   const { userId } = useAuth();
 
   useEffect(() => {

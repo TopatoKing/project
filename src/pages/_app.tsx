@@ -53,6 +53,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
               <Link className="text-lg text-black" href="/products">
                 Products
               </Link>
+              <Link className="text-lg text-black" href="/orders">
+                Orders
+              </Link>
               <Link className="text-lg text-black" href="/account">
                 Account
               </Link>
