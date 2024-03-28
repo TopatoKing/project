@@ -41,7 +41,9 @@ export default async function handler(
           UserForename: data.first_name,
           UserSurname: data.last_name,
           UserEmail: data.email_addresses[0]!.email_address,
-          IsUserStaff: data.email_addresses[0]!.email_address.endsWith("@mycakeyworld.co.uk"),
+          IsUserStaff: data.email_addresses[0]!.email_address.endsWith(
+            "@mycakeyworld.co.uk",
+          ),
         },
       });
 

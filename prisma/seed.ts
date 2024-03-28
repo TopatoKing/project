@@ -62,7 +62,7 @@ async function main() {
     update: {},
     create: {
       CakeID: 3,
-      CakeStringID: "victria_sponge",
+      CakeStringID: "victoria_sponge",
       TypePrice: 10,
       MinEst: 1,
       MaxEst: 4,
@@ -100,7 +100,7 @@ async function main() {
   console.log({ cakeAllergens2 });
 
   const sizes1 = await prisma.sizes.upsert({
-    where: {SizeID: 1},
+    where: { SizeID: 1 },
     update: {},
     create: {
       SizeID: 1,
@@ -110,7 +110,7 @@ async function main() {
   });
   console.log({ sizes1 });
   const sizes2 = await prisma.sizes.upsert({
-    where: {SizeID: 2},
+    where: { SizeID: 2 },
     update: {},
     create: {
       SizeID: 2,
@@ -120,7 +120,7 @@ async function main() {
   });
   console.log({ sizes2 });
   const sizes3 = await prisma.sizes.upsert({
-    where: {SizeID: 3},
+    where: { SizeID: 3 },
     update: {},
     create: {
       SizeID: 3,
