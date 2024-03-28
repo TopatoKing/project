@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 //it displays the cake name, size, shape, total price, status and if it has been paid for
 //it also allows the user to cancel an order if the status is NOT_STARTED this is done by calling the cancelOrder api route
 //upon requesting to cancel an order the user will be notified if the order was successfully cancelled or not through the toast component
-//the cancel button is disabled if the order status is not NOT_STARTED 
+//the cancel button is disabled if the order status is not NOT_STARTED
 export default function Account({
   orders,
   theCakes,
@@ -22,11 +22,10 @@ export default function Account({
   theCakes: Cakes[];
   user: Users;
 }) {
-
   const router = useRouter();
-	const refreshData = () => {
-		void router.replace(router.asPath);
-	};
+  const refreshData = () => {
+    void router.replace(router.asPath);
+  };
 
   function CakeNumbertoCakeName(CakeNumber: number) {
     return (
@@ -40,16 +39,15 @@ export default function Account({
     if (cancel.ok) {
       toast({
         title: "Order Successfully Cancelled",
-        variant: "success"
-      })
-      refreshData()
+        variant: "success",
+      });
+      refreshData();
     } else {
       toast({
         title: "Order failed to delete :(",
-        variant: "destructive"
-      })
+        variant: "destructive",
+      });
     }
-    
   }
 
   return (
@@ -77,13 +75,21 @@ export default function Account({
                 </p>
                 <p className="text-lg">Size: {order.CakeSize}&quot;</p>
                 <p className="text-lg">Shape: {order.CakeShape}</p>
+                <p className="text-lg">Quantity: {order.OrderQuantity}</p>
                 <p className="text-lg">Total: £{order.CakePriceTotal}</p>
                 <p className="text-lg">Status: {order.OrderStatus}</p>
                 <p className="text-lg">
                   Paid: {order.OrderPaid ? "Yes" : "No"}
                 </p>
-                
-                <Button disabled={order.OrderStatus !== "NOT_STARTED"} className="rounded-lg" variant={"destructive"} onClick={() => cancelOrder(order.OrderID)} >Cancel Order</Button>
+
+                <Button
+                  disabled={order.OrderStatus !== "NOT_STARTED"}
+                  className="rounded-lg"
+                  variant={"destructive"}
+                  onClick={() => cancelOrder(order.OrderID)}
+                >
+                  Cancel Order
+                </Button>
               </div>
             </div>
           ))}

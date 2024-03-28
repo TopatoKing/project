@@ -37,21 +37,26 @@ export default function SearchPage({
 }) {
   console.log(sizes);
 
-  const [finalCakePrice, setFinalCakePrice] = useState(theCake.TypePrice);
+  const [finalCakePrice, setFinalCakePrice] = useState(
+    theCake.TypePrice.toPrecision(2),
+  );
   const [selectedSizeMultiplier, setSelectedSizeMultiplier] = useState("1");
   const [selectedShape, setSelectedShape] = useState("circle");
+  const [selectedquantity, setSelectedQuantity] = useState("1");
   const { userId } = useAuth();
 
   useEffect(() => {
-    const price = parseFloat(
-      (theCake.TypePrice * parseFloat(selectedSizeMultiplier)).toFixed(2),
-    );
-    setFinalCakePrice(price);
-  }, [selectedSizeMultiplier]);
+    const price =
+      theCake.TypePrice *
+      parseFloat(selectedSizeMultiplier) *
+      parseInt(selectedquantity, 10);
+
+    setFinalCakePrice(price.toString());
+  }, [selectedSizeMultiplier, selectedquantity, theCake.TypePrice]);
 
   useEffect(() => {
-    if (Number.isNaN(finalCakePrice)) {
-      setFinalCakePrice(theCake.TypePrice);
+    if (Number.isNaN(parseFloat(finalCakePrice))) {
+      setFinalCakePrice(theCake.TypePrice.toPrecision(2));
     }
   });
 
@@ -66,6 +71,7 @@ export default function SearchPage({
             ?.CakeSize ?? 0,
         CakeShape: selectedShape,
         CakePriceTotal: finalCakePrice,
+        OrderQuantity: selectedquantity,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -147,6 +153,28 @@ export default function SearchPage({
                 <SelectItem value="circle">Circle</SelectItem>
                 <SelectItem value="rectangular">Rectangular</SelectItem>
                 <SelectItem value="square">Square</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="mb-4">
+            <label className="mb-2 block" htmlFor="quantity">
+              Quantity:
+            </label>
+            <Select
+              value={selectedquantity.toString()}
+              onValueChange={setSelectedQuantity}
+            >
+              <SelectTrigger id="quantity">
+                <SelectValue placeholder="1" />
+              </SelectTrigger>
+              <SelectContent position="popper">
+                <SelectItem value="1">1</SelectItem>
+                <SelectItem value="2">2</SelectItem>
+                <SelectItem value="3">3</SelectItem>
+                <SelectItem value="4">4</SelectItem>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="6">6</SelectItem>
+                <SelectItem value="7">7</SelectItem>
               </SelectContent>
             </Select>
           </div>

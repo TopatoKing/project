@@ -18,7 +18,7 @@ const marker = localFont({ src: "./marker.ttf" });
 const copper = localFont({ src: "./copper.otf" });
 
 //This is the main navigation bar at the top of the webpage and the main title, this includes the links to each seperate page
-//the user is able to navigate to. The ability for the user to sign in and out is also displayed on this navigation bar. 
+//the user is able to navigate to. The ability for the user to sign in and out is also displayed on this navigation bar.
 //Component and pageProps are the main components of the webpage, which is the content below the main navigation bar.
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -37,7 +37,6 @@ const MyApp: AppType = ({ Component, pageProps }) => {
               "container mx-auto min-h-screen min-w-[80%] max-w-4xl rounded-lg bg-[#B7DDFE] p-4"
             }
           >
-            
             <h1
               className={cn(
                 marker.className,

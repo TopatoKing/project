@@ -21,6 +21,7 @@ model Orders {
   UserID      String  @db.VarChar(255)
   StaffID     Int?
   OrderStatus Status @default(NOT_STARTED)
+  OrderQuantity Int
   OrderPaid   Boolean
   CakeNumber  Int
   CakeSize    Int

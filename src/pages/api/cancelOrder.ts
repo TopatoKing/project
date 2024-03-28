@@ -10,12 +10,12 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   const { userId } = getAuth(req);
-  const {orderId} = req.query;
+  const { orderId } = req.query;
 
   if (!orderId || orderId == undefined) {
-    res.status(404).json("Order not found")
+    res.status(404).json("Order not found");
   }
-const orderNum = parseInt(orderId?.toString() ?? '', 10);
+  const orderNum = parseInt(orderId?.toString() ?? "", 10);
 
   try {
     const order = await db.orders.delete({
@@ -25,12 +25,10 @@ const orderNum = parseInt(orderId?.toString() ?? '', 10);
         UserID: userId?.toString(),
       },
     });
-    res
-      .status(201)
-      .json({
-        message: "Order cancelled successfully",
-        order_id: order.OrderID,
-      });
+    res.status(201).json({
+      message: "Order cancelled successfully",
+      order_id: order.OrderID,
+    });
   } catch (error) {
     console.error("Error inserting order:", error);
     res.status(500).json({ error: "Error creating order" });

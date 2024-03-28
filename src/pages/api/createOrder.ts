@@ -20,6 +20,7 @@ export default async function handler(
         OrderStatus: "NOT_STARTED",
         OrderPaid: false,
         CakePriceTotal: data.CakePriceTotal,
+        OrderQuantity: data.OrderQuantity,
       },
     });
     res
