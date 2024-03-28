@@ -19,8 +19,8 @@ export default async function handler(
         CakeShape: data.CakeShape,
         OrderStatus: "NOT_STARTED",
         OrderPaid: false,
-        CakePriceTotal: data.CakePriceTotal,
-        OrderQuantity: data.OrderQuantity,
+        CakePriceTotal: parseFloat(data.CakePriceTotal.toString()),
+        OrderQuantity: parseInt(data.OrderQuantity.toString()),
       },
     });
     res
