@@ -6,6 +6,7 @@ import type { Orders, Cakes, Users } from "@prisma/client";
 import { toast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
+import React, { useState } from 'react';
 
 //this is the orders section of the account page, it displays the orders for the logged in user
 //the nav element is the page selection part for the accounts page (navigation bar is on the left side of the page)
@@ -22,25 +23,30 @@ export default function Account({
   theCakes: Cakes[];
   user: Users;
 }) {
+  {/* variables for refreshing the page once an order is deleted from the database */}
   const router = useRouter();
   const refreshData = () => {
     void router.replace(router.asPath);
   };
 
+  {/* Converts the Cake number into its name format */}
   function CakeNumbertoCakeName(CakeNumber: number) {
     return (
       theCakes.find((cake) => cake.CakeID === CakeNumber)?.Type ?? "Unknown"
     );
   }
+  {/* function that calls the cancelOrder API */}
   async function cancelOrder(OrderID: number) {
     const cancel = await fetch(`/api/cancelOrder?orderId=${OrderID}`, {
       method: "GET",
     });
+    {/* pop-up that will display the status of deleting the order */}
     if (cancel.ok) {
       toast({
         title: "Order Successfully Cancelled",
         variant: "success",
       });
+      {/* refreshes the page to remove the now deleted order */}
       refreshData();
     } else {
       toast({
@@ -49,24 +55,21 @@ export default function Account({
       });
     }
   }
+  {/* variable for disabling the cnacel order button and enabling confirm cancel */}
+  const [cancelOrderPressed, setCancelOrderPressed] = useState(false);
 
   return (
     <main className="flex">
-      <nav className="mx-4 flex min-h-screen w-[20%] flex-col items-center">
-        <Link className="text-lg text-black" href="/account">
-          Account Details
-        </Link>
-        <Link className="text-lg text-[#0000ff]" href="/orders">
-          Orders
-        </Link>
-      </nav>
-      <div className="h-screen border-l-2 border-[#57b0fe]" />
-      <section className="mx-4 min-h-screen w-[80%]">
+      {/* Creates the section for the order boxes to fill and centers it */}
+      <section className="mx-4 min-h-screen w-[80%] flex w-full flex-col items-center">
+        {/* text at the top of the page that displays the logged in users name */}
         <p className="flex flex-col items-center text-lg">
           Orders for account: {user.UserForename} {user.UserSurname}
         </p>
+        {/* Creates the box and fills it with the details of the order. 
+        Repeats for all orders under the logged in account */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          {orders.map((order, thecake) => (
+          {orders.map((order) => (
             <div key={order.OrderID} className="my-4 flex flex-col">
               <div className="rounded-md block border-4 border-[#57b0fe] p-4">
                 <p className="text-lg">Order No. {order.OrderID}</p>
@@ -82,13 +85,21 @@ export default function Account({
                   Paid: {order.OrderPaid ? "Yes" : "No"}
                 </p>
 
+                {/* Button that unlocks the confirm cancel button when pressed */}
+                <Button className="rounded-lg" 
+                disabled={order.OrderStatus !== "NOT_STARTED"} 
+                onClick={() => setCancelOrderPressed(true)} >
+                  Cancel Order
+                </Button>
+
+                {/* Button that calls the cancelOrder function when pressed, 
+                button gets unlocked when the cancel order button is pressed */}
                 <Button
-                  disabled={order.OrderStatus !== "NOT_STARTED"}
+                  disabled={!cancelOrderPressed}
                   className="rounded-lg"
                   variant={"destructive"}
-                  onClick={() => cancelOrder(order.OrderID)}
-                >
-                  Cancel Order
+                  onClick={() => cancelOrder(order.OrderID)}>
+                  Confirm Cancel
                 </Button>
               </div>
             </div>
@@ -103,6 +114,7 @@ export default function Account({
 //if the user is not logged in they will be redirected to the sign in page
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { userId } = getAuth(context.req);
+  {/* sends user to the sign in page if not logged in */}
   if (!userId) {
     return {
       redirect: {
@@ -112,19 +124,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  {/* locates all orders from the logged in user id */}
   const orders = await db.orders.findMany({
     where: {
       UserID: userId,
     },
   });
 
+  {/* locates the user id of the logged in user */}
   const user = await db.users.findUnique({
     where: {
       UserID: userId,
     },
   });
 
+  {/* locates the cakes table */}
   const thecake = await db.cakes.findMany();
+
+  {/* returns the user id (name) for logged in user, their orders, and the cakes table */}
   return {
     props: {
       user,

@@ -20,11 +20,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+
+  {/* takes the data that has been sent to this API route and defines it */}
   if (req.method === "POST") {
     const { data } = req.body as Data;
 
+    {/* defines admin as false */}
     let admin = false;
 
+    {/* if the users email ends with "@mycakeyworld.co.uk" then grant them admin */}
     if (
       data.email_addresses &&
       data.email_addresses.length > 0 &&
@@ -34,6 +38,7 @@ export default async function handler(
       admin = true;
     }
 
+    {/* Users data that will be placed into a new entry in the users table */}
     try {
       const newUser = await db.users.create({
         data: {
@@ -47,10 +52,12 @@ export default async function handler(
         },
       });
 
+      {/* Displays a message on the successful creation of an account */}
       res.status(201).json({
         message: "User created successfully",
         user_id: newUser.UserID,
       });
+      {/* Catches any errors and displays them */}
     } catch (error) {
       console.error("Error inserting user:", error);
       res.status(500).json({ error: "Error creating user" });

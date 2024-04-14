@@ -1,11 +1,3 @@
-import Link from "next/link";
-import localFont from "next/font/local";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-
-//font for the text
-const copper = localFont({ src: "./copper.otf" });
-
 //This is the contact page, which displays the operating hours and contact details for the company
 export default function Contact() {
   return (

@@ -1,4 +1,4 @@
-import { toast, useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { db } from "@/server/db";
 import { GetServerSideProps } from "next";
 import type { Cakes, Sizes } from "@prisma/client";
@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@clerk/nextjs";
 
-//make a type for the data that is returned from the server
+//make a type for the data that is returned from the database server
 interface FinalCake extends Cakes {
   CakeAllergens: {
     AllergenID: number;
@@ -24,10 +24,11 @@ interface FinalCake extends Cakes {
   }[];
 }
 
-//this is the page for the product selected from the products page
-//it displays the cake image, allergens, size, shape and price
-//it also allows the user to place an order for the selected cake
-//if the user is not logged in they will not be able to place an order
+/*this is the page for the product selected from the products page
+it displays the cake image, allergens, size, shape and price
+it also allows the user to place an order for the selected cake
+if the user is not logged in they will not be able to place an order*/
+
 export default function SearchPage({
   theCake,
   sizes,
@@ -37,14 +38,24 @@ export default function SearchPage({
 }) {
   console.log(sizes);
 
+  //Variable that displays the price of the selected items
   const [finalCakePrice, setFinalCakePrice] = useState(
     theCake.TypePrice.toPrecision(2),
   );
+
+  //size, shape and quantity variables with their respective default values
   const [selectedSizeMultiplier, setSelectedSizeMultiplier] = useState("1");
   const [selectedShape, setSelectedShape] = useState("circle");
   const [selectedquantity, setSelectedQuantity] = useState("1");
   const { userId } = useAuth();
 
+  //variables for the place order and confirm order buttons
+  const [placeOrderPressed, setPlaceOrderPressed] = useState(false);
+  const [confirmOrderPressed, setConfirmOrderPressed] = useState(false);
+  const handlePlaceOrder = () => {setPlaceOrderPressed(true);};
+
+  /* changes the value of the price depending on what the user has selected for type, 
+  size and quantity */
   useEffect(() => {
     const price =
       theCake.TypePrice *
@@ -54,13 +65,16 @@ export default function SearchPage({
     setFinalCakePrice(price.toString());
   }, [selectedSizeMultiplier, selectedquantity, theCake.TypePrice]);
 
+  //sets the default displayed value of the price to the selected cake types base price
   useEffect(() => {
     if (Number.isNaN(parseFloat(finalCakePrice))) {
       setFinalCakePrice(theCake.TypePrice.toPrecision(2));
     }
   });
 
+  //function submits the chosen values of type, size, shape, quantity, price and UserID to the createOrder API
   async function submit() {
+    setConfirmOrderPressed(true)
     const order = await fetch("/api/createOrder", {
       method: "POST",
       body: JSON.stringify({
@@ -77,6 +91,7 @@ export default function SearchPage({
         "Content-Type": "application/json",
       },
     });
+    {/* Displays a pop-up in the bottom corner of the page to notify the user of the order status */}
     if (order.ok) {
       toast({
         title: "Order Placed",
@@ -94,7 +109,9 @@ export default function SearchPage({
 
   return (
     <main className="flex">
+      {/* sections off the left sitde of the page for the image and allergens */}
       <nav className="mx-4 min-h-[60dvh] w-[40%]">
+        {/* fetches the image of the selected cake from the database and displays it */}
         <Image
           src={`/cakes/${theCake.CakeStringID}.jpg`}
           alt={theCake.Type}
@@ -102,6 +119,7 @@ export default function SearchPage({
           height={300}
           className="mt-12 w-full justify-center rounded-lg"
         />
+        {/* Fetches the allergens of the selected cake from the database and displays them */}
         {theCake.CakeAllergens.length > 0 && (
           <div className="flex flex-col items-center">
             <h3 className="text-xl font-bold">Allergens:</h3>
@@ -115,12 +133,15 @@ export default function SearchPage({
           </div>
         )}
       </nav>
+      {/* sections off the right side of the page for the order details and places a dividing line 
+      for the left and right */}
       <div className="h-[65dvh] border-l-2 border-[#57b0fe]" />
       <section className="mx-4 min-h-[60dvh] w-[60%]">
         <div>
           <h2 className="mb-4 text-center text-2xl font-semibold">
             {theCake.Type}
           </h2>
+          {/* Selecter box and values extracted from the database for the size of the cake */}
           <div className="mb-4">
             <label className="mb-2 block" htmlFor="size">
               Size:
@@ -141,6 +162,7 @@ export default function SearchPage({
               </SelectContent>
             </Select>
           </div>
+          {/* Selecter box and values for the shape of the cake */}
           <div className="mb-4">
             <label className="mb-2 block" htmlFor="shape">
               Shape:
@@ -156,6 +178,7 @@ export default function SearchPage({
               </SelectContent>
             </Select>
           </div>
+          {/* Selecter box for the quantity of the order */}
           <div className="mb-4">
             <label className="mb-2 block" htmlFor="quantity">
               Quantity:
@@ -178,14 +201,25 @@ export default function SearchPage({
               </SelectContent>
             </Select>
           </div>
+          {/* Text and value for the calculated price of the order */}
           <div className="mb-6">
             <label className="mb-2 block" htmlFor="price">
               Price:
             </label>
             <span>£{finalCakePrice}</span>
           </div>
-          <Button className="w-full" onClick={submit}>
+          {/* Place order button which unlocks the confirm order button */}
+          <Button className="w-full" 
+          onClick={() =>setPlaceOrderPressed(true)} 
+          disabled={placeOrderPressed} >
             Place Order
+          </Button>
+          {/* Confirm order button is unlocked when Placer Order button is pressed, this 
+          sends the inputed values to the submit function */}
+          <Button className="w-full" 
+          onClick={submit} 
+          disabled={!placeOrderPressed || confirmOrderPressed}>
+            Confirm Order
           </Button>
         </div>
       </section>
@@ -193,11 +227,9 @@ export default function SearchPage({
   );
 }
 
-//fetches the cake id from the database and displays the error 404 page is the cake id is not found
-//fetches the CakeAllergens table and the Allergens table from the database and includes it with the CakeID
-//fetches the sizes table from the database
-//returns the allergens for that CakeID and the CakeID itself under the variable theCake
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  {/* Fetches the cake id from the database and displays the error 404 page is the cake 
+id is not found. */}
   const { cake_id } = context.query;
 
   if (!cake_id || isNaN(parseInt(cake_id as string, 10))) {
@@ -206,6 +238,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  {/* Fetches the CakeAllergens table and the Allergens table from the database and 
+includes it with the CakeID. */}
   const theCake = await db.cakes.findUnique({
     where: {
       CakeID: parseInt(cake_id as string, 10),
@@ -220,14 +254,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
   console.log(theCake);
 
+  {/* Displays error 404 page if the cake allergens are not found */}
   if (!theCake) {
     return {
       notFound: true,
     };
   }
 
+  {/* Fetches the sizes table from the database. */}
   const sizes = await db.sizes.findMany();
 
+  {/* Returns the allergens for that CakeID and the CakeID itself under the variable 
+theCake. Along with the sizes table */}
   return {
     props: {
       theCake,

@@ -30,35 +30,36 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         },
       }}
     >
+      {/* creates the darker background of the page */}
       <main className={cn(GeistSans.className)}>
         <div className="bg-[#57b0fe] p-8">
-          <main
-            className={
-              "container mx-auto min-h-screen min-w-[80%] max-w-4xl rounded-lg bg-[#B7DDFE] p-4"
-            }
-          >
-            <h1
-              className={cn(
-                marker.className,
-                "flex justify-center py-8 text-5xl",
-              )}
-            >
+          {/* creates the main lighter container for the page */}
+          <main className={"container mx-auto min-h-screen min-w-[80%] max-w-4xl rounded-lg bg-[#B7DDFE] p-4"}>
+            {/* Company name displayed at the top of the page in the marker font */}
+            <h1 className={cn(marker.className, "flex justify-center py-8 text-5xl",)}>
               My Cakey World
             </h1>
+            {/* div ensures the options are evenly spaced and all use the font copper */}
             <div className={cn("flex justify-evenly", copper.className)}>
+              {/* Link to the contact page through contact.tsx */}
               <Link className="text-lg text-black" href="/contact">
                 Contact
               </Link>
+              {/* Link to the products page through products.tsx */}
               <Link className="text-lg text-black" href="/products">
                 Products
               </Link>
+              {/* Link to the orders page through orders.tsx */}
               <Link className="text-lg text-black" href="/orders">
                 Orders
               </Link>
+              {/* Link to the users account page through [[...index]].tsx located in the account folder */}
               <Link className="text-lg text-black" href="/account">
                 Account
               </Link>
+              {/* Sign in/out button imported from clerk */}
               <SignedOut>
+                {/* sign in is displayed when no user is logged in */}
                 <SignInButton>
                   <Link className="text-black" href={"#"}>
                     Sign In
@@ -66,6 +67,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
                 </SignInButton>
               </SignedOut>
               <SignedIn>
+                {/* Sign out is displayed when a user is logged in */}
                 <SignOutButton>
                   <Link className="text-black" href={"#"}>
                     Sign Out
@@ -73,7 +75,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
                 </SignOutButton>
               </SignedIn>
             </div>
+            {/* seperating line that divides the main page from the navigation bar */}
             <hr className="my-8 h-[2px] border-0 bg-[#57b0fe]" />
+            {/* main page component, this is where the other pages are displayed */}
             <Component {...pageProps} />
           </main>
         </div>
