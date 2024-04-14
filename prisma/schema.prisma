@@ -57,12 +57,7 @@ model Users {
   Order        Orders[]
   UserForename String
   UserSurname  String
-  UserAddress  String?
-  UserTown     String?
-  UserCounty   String?
-  UserPostcode String?
   UserEmail    String
-  UserMobile   String?
   IsUserStaff  Boolean  @default(false)
 }
 
