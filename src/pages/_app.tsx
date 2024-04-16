@@ -36,9 +36,11 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           {/* creates the main lighter container for the page */}
           <main className={"container mx-auto min-h-screen min-w-[80%] max-w-4xl rounded-lg bg-[#B7DDFE] p-4"}>
             {/* Company name displayed at the top of the page in the marker font */}
-            <h1 className={cn(marker.className, "flex justify-center py-8 text-5xl",)}>
-              My Cakey World
-            </h1>
+            <Link href="/">
+              <h1 className={cn(marker.className, "flex justify-center py-8 text-5xl",)}>
+               My Cakey World
+              </h1>
+            </Link>
             {/* div ensures the options are evenly spaced and all use the font copper */}
             <div className={cn("flex justify-evenly", copper.className)}>
               {/* Link to the contact page through contact.tsx */}
@@ -61,7 +63,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
               <SignedOut>
                 {/* sign in is displayed when no user is logged in */}
                 <SignInButton>
-                  <Link className="text-black" href={"#"}>
+                  {/* Link to the sign in page through [[...index]].tsx in the sign-in folder */}
+                  <Link className="text-black" href="/sign-in">
                     Sign In
                   </Link>
                 </SignInButton>
@@ -69,7 +72,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
               <SignedIn>
                 {/* Sign out is displayed when a user is logged in */}
                 <SignOutButton>
-                  <Link className="text-black" href={"#"}>
+                  {/* Signs the user out and links to the sign in page through [[...index]].tsx in the sign-in folder */}
+                  <Link className="text-black" href="/sign-in">
                     Sign Out
                   </Link>
                 </SignOutButton>

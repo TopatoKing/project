@@ -32,15 +32,12 @@ model Orders {
 }
 
 //database table for Cake information
-//CakeNumber is redundant?
 model Cakes {
   CakeID        Int          @id @default(autoincrement())
   CakeNumber    Int
   Type          String
   CakeStringID  String
   TypePrice     Float
-  MinEst        Int
-  MaxEst        Int
   CakeAllergens CakeAllergens[]
 }
 

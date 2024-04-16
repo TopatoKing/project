@@ -3,7 +3,7 @@ import { authMiddleware } from "@clerk/nextjs";
 /* This export allows the application to be public so the 
 user does not need to be logged in to view the site */
 export default authMiddleware({
-  publicRoutes: ["/", "/api/createUser"],
+  publicRoutes: ["/", "/api/createUser", "/sign_in", "/contact", "/products"],
 });
 
 /* This is a route matcher for Next.js which include API routes 

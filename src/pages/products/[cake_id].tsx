@@ -52,7 +52,6 @@ export default function SearchPage({
   //variables for the place order and confirm order buttons
   const [placeOrderPressed, setPlaceOrderPressed] = useState(false);
   const [confirmOrderPressed, setConfirmOrderPressed] = useState(false);
-  const handlePlaceOrder = () => {setPlaceOrderPressed(true);};
 
   /* changes the value of the price depending on what the user has selected for type, 
   size and quantity */

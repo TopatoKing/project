@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { db } from "@/server/db";
 import { getAuth } from "@clerk/nextjs/server";
@@ -14,7 +13,7 @@ import React, { useState } from 'react';
 //it also allows the user to cancel an order if the status is NOT_STARTED this is done by calling the cancelOrder api route
 //upon requesting to cancel an order the user will be notified if the order was successfully cancelled or not through the toast component
 //the cancel button is disabled if the order status is not NOT_STARTED
-export default function Account({
+export default function ({
   orders,
   theCakes,
   user,
@@ -55,13 +54,15 @@ export default function Account({
       });
     }
   }
-  {/* variable for disabling the cnacel order button and enabling confirm cancel */}
-  const [cancelOrderPressed, setCancelOrderPressed] = useState(false);
+  {/* variable for disabling the cancel order button and enabling confirm cancel */}
+  const [cancelOrderPressed, setCancelOrderPressed] =  useState<boolean[]>(
+		new Array(orders.length).fill(false),
+	);
 
-  return (
+  return (  
     <main className="flex">
       {/* Creates the section for the order boxes to fill and centers it */}
-      <section className="mx-4 min-h-screen w-[80%] flex w-full flex-col items-center">
+      <section className="mx-4 min-h-screen w-full flex flex-col items-center">
         {/* text at the top of the page that displays the logged in users name */}
         <p className="flex flex-col items-center text-lg">
           Orders for account: {user.UserForename} {user.UserSurname}
@@ -69,7 +70,7 @@ export default function Account({
         {/* Creates the box and fills it with the details of the order. 
         Repeats for all orders under the logged in account */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          {orders.map((order) => (
+          {orders.map((order, index) => (
             <div key={order.OrderID} className="my-4 flex flex-col">
               <div className="rounded-md block border-4 border-[#57b0fe] p-4">
                 <p className="text-lg">Order No. {order.OrderID}</p>
@@ -86,19 +87,28 @@ export default function Account({
                 </p>
 
                 {/* Button that unlocks the confirm cancel button when pressed */}
-                <Button className="rounded-lg" 
+                <Button className="rounded-lg mx-1" 
                 disabled={order.OrderStatus !== "NOT_STARTED"} 
-                onClick={() => setCancelOrderPressed(true)} >
+                onClick={() => {
+                  const orderthing = [...cancelOrderPressed];
+											orderthing[index] = true;
+											setCancelOrderPressed(orderthing);
+                }} >
                   Cancel Order
                 </Button>
 
                 {/* Button that calls the cancelOrder function when pressed, 
                 button gets unlocked when the cancel order button is pressed */}
                 <Button
-                  disabled={!cancelOrderPressed}
-                  className="rounded-lg"
+                  disabled={!cancelOrderPressed[index]}
+                  className="rounded-lg mx-1"
                   variant={"destructive"}
-                  onClick={() => cancelOrder(order.OrderID)}>
+                  onClick={() => {
+                    cancelOrder(order.OrderID).then(() => {
+                      setCancelOrderPressed(new Array(orders.length).fill(false))
+                    });
+                    
+                    }}>
                   Confirm Cancel
                 </Button>
               </div>
