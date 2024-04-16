@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 //it also allows the user to cancel an order if the status is NOT_STARTED this is done by calling the cancelOrder api route
 //upon requesting to cancel an order the user will be notified if the order was successfully cancelled or not through the toast component
 //the cancel button is disabled if the order status is not NOT_STARTED
-export default function ({
+export default function Orders({
   orders,
   theCakes,
   user,
@@ -104,7 +104,7 @@ export default function ({
                   className="rounded-lg mx-1"
                   variant={"destructive"}
                   onClick={() => {
-                    cancelOrder(order.OrderID).then(() => {
+                    void cancelOrder(order.OrderID).then(() => {
                       setCancelOrderPressed(new Array(orders.length).fill(false))
                     });
                     
