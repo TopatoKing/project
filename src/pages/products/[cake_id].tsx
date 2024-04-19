@@ -216,6 +216,7 @@ export default function SearchPage({
           {/* Confirm order button is unlocked when Placer Order button is pressed, this 
           sends the inputed values to the submit function */}
           <Button className="w-full" 
+          variant={"constructive"}
           onClick={submit} 
           disabled={!placeOrderPressed || confirmOrderPressed}>
             Confirm Order
