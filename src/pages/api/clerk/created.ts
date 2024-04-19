@@ -1,32 +1,68 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { type NextApiRequest, type NextApiResponse } from "next";
 import { db } from "@/server/db";
 
+//this is the data that will be sent to the api route
+type Data = {
+  data: {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email_addresses: {
+      email_address: string;
+    }[];
+  };
+};
+
+//this api route will be called when a new user is created user logs in and will insert a new user into the database
+//and send a success message or an error message back for the toaster to display
+//it will also check if the user is an admin and set the IsUserStaff field to true if they are
 export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse,
+  req: NextApiRequest,
+  res: NextApiResponse,
 ) {
-	if (req.method === "POST") {
-		const { data } = req.body;
 
-		let admin = false;
+  {/* takes the data that has been sent to this API route and defines it */}
+  if (req.method === "POST") {
+    const { data } = req.body as Data;
 
-		if (
-			data.email_addresses[0].email_address.endsWith("@mycakeyworld.me")
-		) {
-			admin = true;
-		}
+    {/* defines admin as false */}
+    let admin = false;
 
-		try {
-			await db.$executeRaw`INSERT INTO users (UserID, UserForename, UserSurname, UserEmail, IsUserStaff) VALUES (${data.id}, ${data.first_name}, ${data.last_name}, ${data.email_addresses[0].email_address}, ${admin})`;
+    {/* if the users email ends with "@mycakeyworld.co.uk" then grant them admin */}
+    if (
+      data.email_addresses &&
+      data.email_addresses.length > 0 &&
+      data.email_addresses[0] &&
+      data.email_addresses[0].email_address.endsWith("@mycakeyworld.co.uk")
+    ) {
+      admin = true;
+    }
 
-			res.status(201).json({
-				message: "User created successfully",
-			});
-		} catch (error) {
-			console.error("Error inserting user:", error);
-			res.status(500).json({ error: "Error creating user" });
-		}
-	} else {
-		res.status(405).json({ error: "Method not allowed" });
-	}
+    {/* Users data that will be placed into a new entry in the users table */}
+    try {
+      const newUser = await db.users.create({
+        data: {
+          UserID: data.id,
+          UserForename: data.first_name,
+          UserSurname: data.last_name,
+          UserEmail: data.email_addresses[0]!.email_address,
+          IsUserStaff: data.email_addresses[0]!.email_address.endsWith(
+            "@mycakeyworld.co.uk",
+          ),
+        },
+      });
+
+      {/* Displays a message on the successful creation of an account */}
+      res.status(201).json({
+        message: "User created successfully",
+        user_id: newUser.UserID,
+      });
+      {/* Catches any errors and displays them */}
+    } catch (error) {
+      console.error("Error inserting user:", error);
+      res.status(500).json({ error: "Error creating user" });
+    }
+  } else {
+    res.status(405).json({ error: "Method not allowed" });
+  }
 }
