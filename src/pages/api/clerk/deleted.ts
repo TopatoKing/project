@@ -6,7 +6,7 @@ export default async function handler(
 	res: NextApiResponse,
 ) {
 	if (req.method === "POST") {
-		const { data } = req.body;
+		const { data } = req.body as { data: { id: string } };
 
 		try {
 			await db.$executeRaw`DELETE FROM users WHERE UserID = ${data.id}`;

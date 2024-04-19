@@ -25,18 +25,6 @@ export default async function handler(
   if (req.method === "POST") {
     const { data } = req.body as Data;
 
-    {/* defines admin as false */}
-    let admin = false;
-
-    {/* if the users email ends with "@mycakeyworld.co.uk" then grant them admin */}
-    if (
-      data.email_addresses &&
-      data.email_addresses.length > 0 &&
-      data.email_addresses[0] &&
-      data.email_addresses[0].email_address.endsWith("@mycakeyworld.co.uk")
-    ) {
-      admin = true;
-    }
 
     {/* Users data that will be placed into a new entry in the users table */}
     try {

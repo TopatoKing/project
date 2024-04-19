@@ -1,17 +1,28 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/server/db";
 
+type Data = {
+	data: {
+	  id: string;
+	  first_name: string;
+	  last_name: string;
+	  email_addresses: {
+		email_address: string;
+	  }[];
+	};
+  };
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) {
 	if (req.method === "POST") {
-		const { data } = req.body;
+		const { data } = req.body as Data;
 
 		let admin = false;
 
 		if (
-			data.email_addresses[0].email_address.endsWith("@mycakeyworld.me")
+			data.email_addresses[0]!.email_address.endsWith("@mycakeyworld.me")
 		) {
 			admin = true;
 		}
@@ -21,7 +32,7 @@ export default async function handler(
 	SET 
     UserForename = ${data.first_name},
     UserSurname = ${data.last_name},
-    UserEmail = ${data.email_addresses[0].email_address},
+    UserEmail = ${data.email_addresses[0]!.email_address},
     IsUserStaff = ${admin}
 	WHERE 
 		UserID = ${data.id}`;
