@@ -1,24 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/server/db";
 
-//this is the data that will be sent to the api route
-type Data = {
-	data: {
-	  id: string;
-	  first_name: string;
-	  last_name: string;
-	  email_addresses: {
-		email_address: string;
-	  }[];
-	};
-  };
-
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) {
 	if (req.method === "POST") {
-		const { data } = req.body as Data;
+		const { data } = req.body as {data: {id: string}};
 
 		try {
 			await db.$executeRaw`DELETE FROM users WHERE UserID = ${data.id}`;
