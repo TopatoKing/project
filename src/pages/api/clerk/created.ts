@@ -13,18 +13,17 @@ type Data = {
   };
 };
 
-//this api route will be called when a new user is created user logs in and will insert a new user into the database
-//and send a success message or an error message back for the toaster to display
-//it will also check if the user is an admin and set the IsUserStaff field to true if they are
+/*this api route will be called when a new user is created user logs in and will insert a new user
+ into the database and send a success message or an error message back to be stored in the clerk console.
+  It will also check if the user is an admin and set the IsUserStaff field to true if they are */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
 
-  {/* takes the data that has been sent to this API route and defines it */}
+  {/* takes the data that has been sent to this API route and defines it as Data */}
   if (req.method === "POST") {
     const { data } = req.body as Data;
-
 
     {/* Users data that will be placed into a new entry in the users table */}
     try {
