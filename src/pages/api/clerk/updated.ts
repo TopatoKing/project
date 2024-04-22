@@ -19,14 +19,6 @@ export default async function handler(
 	if (req.method === "POST") {
 		const { data } = req.body as Data;
 
-		let admin = false;
-
-		if (
-			data.email_addresses[0]!.email_address.endsWith("@mycakeyworld.me")
-		) {
-			admin = true;
-		}
-
 		try {
 			await db.users.update({ 
 				where: { UserID: data.id },
