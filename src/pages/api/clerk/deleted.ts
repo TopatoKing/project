@@ -9,7 +9,7 @@ export default async function handler(
 		const { data } = req.body as {data: {id: string}};
 
 		try {
-			await db.$executeRaw`DELETE FROM users WHERE UserID = ${data.id}`;
+			await db.$executeRaw`DELETE FROM Users WHERE UserID = ${data.id}`;
 
 			res.status(201).json({
 				message: "User deleted successfully",

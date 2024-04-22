@@ -28,7 +28,7 @@ export default async function handler(
 		}
 
 		try {
-			await db.$executeRaw`UPDATE users 
+			await db.$executeRaw`UPDATE Users 
 	SET 
     UserForename = ${data.first_name},
     UserSurname = ${data.last_name},
