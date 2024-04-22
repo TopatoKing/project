@@ -15,8 +15,8 @@ export default function Contact() {
         <p className="text-m">Please call us: 07765 635708</p>
         <p className="text-m">
           Please email us at:{" "}
-          <a className="text-blue-600" href="#">
-            cakeyworld12@gmail.com
+          <a className="text-blue-600" href="mailto:mycakeyworld@gmail.com">
+            mycakeyworld@gmail.com
           </a>
         </p>
       </div>

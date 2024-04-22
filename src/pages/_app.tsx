@@ -73,7 +73,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
                 {/* Sign out is displayed when a user is logged in */}
                 <SignOutButton>
                   {/* Signs the user out and links to the sign in page through [[...index]].tsx in the sign-in folder */}
-                  <Link className="text-black" href="/sign-in">
+                  <Link className="text-black" href="/">
                     Sign Out
                   </Link>
                 </SignOutButton>
