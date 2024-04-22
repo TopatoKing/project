@@ -28,14 +28,13 @@ export default async function handler(
 		}
 
 		try {
-			await db.$executeRaw`UPDATE Users 
-	SET 
-    UserForename = ${data.first_name},
-    UserSurname = ${data.last_name},
-    UserEmail = ${data.email_addresses[0]!.email_address},
-    IsUserStaff = ${admin}
-	WHERE 
-		UserID = ${data.id}`;
+			await db.users.update({ 
+				where: { UserID: data.id },
+				data: {
+					UserForename: data.first_name,
+					UserSurname: data.last_name,
+					UserEmail: data.email_addresses[0]!.email_address},
+		});
 
 			res.status(201).json({
 				message: "User updated successfully",
