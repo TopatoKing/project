@@ -27,8 +27,8 @@ model Orders {
   CakeSize    Int
   CakeShape   String
   CakePriceTotal Float
-  Users       Users   @relation(fields: [UserID], references: [UserID])
-  Staff       Staff?   @relation(fields: [StaffID], references: [StaffID])
+  Users       Users   @relation(fields: [UserID], references: [UserID], onDelete: Cascade, onUpdate: Cascade)
+  Staff       Staff?   @relation(fields: [StaffID], references: [StaffID], onDelete: SetNull, onUpdate: Cascade)
 }
 
 //database table for Cake information
@@ -79,6 +79,6 @@ model CakeAllergens {
   CakeAllergensID Int    @id @default(autoincrement())
   CakeID          Int
   AllergenID      Int
-  Cakes           Cakes     @relation(fields: [CakeID], references: [CakeID])
-  Allergens       Allergens @relation(fields: [AllergenID], references: [AllergenID])
+  Cakes           Cakes     @relation(fields: [CakeID], references: [CakeID], onDelete: Cascade, onUpdate: Cascade)
+  Allergens       Allergens @relation(fields: [AllergenID], references: [AllergenID], onDelete: Cascade, onUpdate: Cascade)
 }
