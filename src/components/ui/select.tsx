@@ -1,19 +1,23 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 
+// Defines the select component.
 const Select = SelectPrimitive.Root;
 
+// Defines the select group component.
 const SelectGroup = SelectPrimitive.Group;
 
+// Defines the select value component.
 const SelectValue = SelectPrimitive.Value;
 
+// Defines the select trigger component.
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
+  // Returns the select trigger component.
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -28,12 +32,15 @@ const SelectTrigger = React.forwardRef<
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
+// Sets the display name for the select trigger component.
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
+// Defines the select scroll up button component.
 const SelectScrollUpButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
 >(({ className, ...props }, ref) => (
+  // Returns the select scroll up button component.
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
@@ -45,12 +52,15 @@ const SelectScrollUpButton = React.forwardRef<
     <ChevronUp className="h-4 w-4" />
   </SelectPrimitive.ScrollUpButton>
 ));
+// Sets the display name for the select scroll up button component.
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
+// Defines the select scroll down button component.
 const SelectScrollDownButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
 >(({ className, ...props }, ref) => (
+  // Returns the select scroll down button component.
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
@@ -62,13 +72,16 @@ const SelectScrollDownButton = React.forwardRef<
     <ChevronDown className="h-4 w-4" />
   </SelectPrimitive.ScrollDownButton>
 ));
+// Sets the display name for the select scroll down button component.
 SelectScrollDownButton.displayName =
   SelectPrimitive.ScrollDownButton.displayName;
 
+// Defines the select content component.
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(({ className, children, position = "popper", ...props }, ref) => (
+  // Returns the select content component.
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
@@ -95,24 +108,30 @@ const SelectContent = React.forwardRef<
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
 ));
+// Sets the display name for the select content component.
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
+// Defines the select label component.
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
 >(({ className, ...props }, ref) => (
+  // Returns the select label component.
   <SelectPrimitive.Label
     ref={ref}
     className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
     {...props}
   />
 ));
+// Sets the display name for the select label component.
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
+// Defines the select item component.
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ className, children, ...props }, ref) => (
+  // Returns the select item component.
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
@@ -126,16 +145,18 @@ const SelectItem = React.forwardRef<
         <Check className="h-4 w-4" />
       </SelectPrimitive.ItemIndicator>
     </span>
-
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));
+// Sets the display name for the select item component.
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
+// Defines the select separator component.
 const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
 >(({ className, ...props }, ref) => (
+  // Returns the select separator component.
   <SelectPrimitive.Separator
     ref={ref}
     className={cn(
@@ -145,8 +166,10 @@ const SelectSeparator = React.forwardRef<
     {...props}
   />
 ));
+// Sets the display name for the select separator component.
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
+// Exports the select components.
 export {
   Select,
   SelectGroup,

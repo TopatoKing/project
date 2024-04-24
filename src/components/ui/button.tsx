@@ -1,17 +1,18 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/utils";
 
+// Defines the button variants.
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300",
   {
     variants: {
+      // Defines the button variant styles.
       variant: {
         default:
           "bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90",
-        destructive:
+          destructive:
           "bg-red-500 text-neutral-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90",
         constructive:
           "bg-green-500 text-neutral-50 hover:bg-green-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-green-900/90",
@@ -23,6 +24,7 @@ const buttonVariants = cva(
           "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
         link: "text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50",
       },
+      // Defines the button size variants.
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
@@ -30,6 +32,7 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
       },
     },
+    // Sets the default button variants.
     defaultVariants: {
       variant: "default",
       size: "default",
@@ -37,15 +40,18 @@ const buttonVariants = cva(
   },
 );
 
+// Defines the button properties.
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
+// Defines the button component.
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
+    // Returns the button component.
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
@@ -55,6 +61,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   },
 );
+// Sets the display name for the button component.
 Button.displayName = "Button";
 
+// Exports the button component.
 export { Button, buttonVariants };

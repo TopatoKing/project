@@ -8,9 +8,12 @@ import {
 } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 
+/* This function renders a toaster component that displays toast
+notifications for the user. @return returns the toaster component. */
 export function Toaster() {
   const { toasts } = useToast();
 
+  // Render the toast notifications.
   return (
     <ToastProvider>
       {toasts.map(function ({ id, title, description, action, ...props }) {
