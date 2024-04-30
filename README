@@ -1,4 +1,12 @@
-For dev server:
+You can go directly to the live website by clicking this link: https://mycakeyworld.me/
+
+To interact with the database, open a new terminal and run: `npx prisma studio`
+This command will open the Prisma Studio in your browser. 
+You can create, read, update, and delete records in the database using this tool.
+
+**If error occurs in prisma studio, please make sure that aws is not blocked by your internet provider or use a different network**
+
+For dev server (localhost version of live website):
 
     1. clone the github repo
 
@@ -7,9 +15,3 @@ For dev server:
     3. run `npm i`
 
     4. run `npn run dev`
-
-To interact with the database, open a new terminal and run: `npx prisma studio`
-This command will open the Prisma Studio in your browser. 
-You can create, read, update, and delete records in the database using this tool.
-
-You can go directly to the live website by clicking this link: https://mycakeyworld.vercel.app/
